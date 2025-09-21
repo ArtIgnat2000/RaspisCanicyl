@@ -147,6 +147,48 @@
       margin: 5px 0;
     }
 
+    /* Подвал */
+    .footer {
+      width: 90%;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 0 0 30px 0;
+      text-align: center;
+      border: 2px solid white;
+      box-sizing: border-box;
+    }
+
+    .footer h3 {
+      color: #1e5799;
+      margin-top: 0;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .footer-link {
+      background: linear-gradient(to right, #4a90e2, #2c6cb7);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: all 0.2s ease;
+    }
+
+    .footer-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
     /* Адаптивность для мобильных устройств */
     @media (max-width: 768px) {
       body {
@@ -189,6 +231,17 @@
         padding: 12px;
       }
       
+      .footer {
+        padding: 15px;
+        width: 90%;
+        margin: 0 0 20px 0;
+      }
+      
+      .footer-links {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
       /* Для очень маленьких экранов */
       @media (max-height: 600px) {
         body {
@@ -228,7 +281,7 @@
     <div class="event">
       <div class="date">27 октября – 4 ноября 2025</div>
       <div class="title">Осенние каникулы</div>
-      <div class="description">Смена времени, первые заморозки, подготовка к зиме.</div>
+      <div class="description">Первые заморозки, подготовка к зиме.</div>
     </div>
 
     <div class="event">
@@ -253,6 +306,16 @@
       <div class="date">26 мая 2026</div>
       <div class="title">Последний учебный день</div>
       <div class="description">Завершение учебного года, выпускные, отчётные мероприятия.</div>
+    </div>
+  </div>
+
+  <!-- Подвал -->
+  <div class="footer">
+    <h3>Чем заняться в каникулы?</h3>
+    <p>Полезные ресурсы:</p>
+    <div class="footer-links">
+      <a href="http://naash.ru/" class="footer-link">НААШ</a>
+      <a href="https://vk.com/itcubenn" class="footer-link">IT-куб</a>
     </div>
   </div>
 
