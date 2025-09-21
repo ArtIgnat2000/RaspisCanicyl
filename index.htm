@@ -10,11 +10,10 @@
       padding: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(to bottom, #a2d9ff, #66b5ff);
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      overflow: hidden;
       position: relative;
       /* Уменьшаем масштаб всего сайта на 15% */
       zoom: 0.85;
@@ -84,6 +83,7 @@
       align-items: center;
       gap: 5px;
       text-decoration: none;
+      white-space: nowrap;
     }
 
     .btn-schedule:hover {
@@ -99,7 +99,7 @@
       border-radius: 15px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       padding: 20px;
-      margin-top: 20px;
+      margin: 20px 0 30px 0; /* Добавлен нижний отступ */
       z-index: 5;
       overflow: hidden;
       position: relative;
@@ -115,6 +115,10 @@
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.05);
       transition: transform 0.2s ease;
+    }
+
+    .event:last-child {
+      margin-bottom: 0; /* Убираем отступ у последнего элемента */
     }
 
     .event:hover {
@@ -141,16 +145,22 @@
     /* Адаптивность для мобильных устройств */
     @media (max-width: 768px) {
       body {
-        zoom: 1; /* Сброс zoom для мобильных */
-        transform: scale(0.85); /* Используем transform для масштабирования */
+        zoom: 1;
+        transform: scale(0.85);
         transform-origin: top center;
-        width: 117.65%; /* 100% / 0.85 для компенсации масштаба */
+        width: 117.65%;
+        min-height: 100vh;
+        overflow-y: auto; /* Разрешаем вертикальную прокрутку */
+        overflow-x: hidden; /* Запрещаем горизонтальную прокрутку */
+        padding-bottom: 20px; /* Добавляем отступ снизу */
       }
       
       .header {
         flex-direction: column;
         gap: 10px;
         text-align: center;
+        padding: 12px 15px;
+        margin-top: 15px;
       }
       
       .header h1 {
@@ -164,10 +174,26 @@
       
       .container {
         padding: 15px;
+        margin: 15px 0 20px 0;
+        width: 92%;
       }
       
       .event {
         padding: 12px;
+      }
+      
+      /* Для очень маленьких экранов */
+      @media (max-height: 600px) {
+        body {
+          transform: scale(0.8);
+        }
+      }
+    }
+    
+    /* Для очень маленьких экранов по высоте */
+    @media (max-height: 500px) {
+      body {
+        overflow-y: scroll;
       }
     }
   </style>
