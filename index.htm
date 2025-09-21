@@ -83,11 +83,7 @@
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
       position: relative;
       border: 2px solid var(--header-border);
-      width: 100%; /* Увеличена ширина */
-      max-width: 1200px; /* Увеличена максимальная ширина */
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 20px;
+      width: 100%;
       box-sizing: border-box;
     }
 
@@ -136,8 +132,8 @@
 
     /* Контейнер с каникулами */
     .container {
-      width: 100%; /* Увеличена ширина */
-      max-width: 1200px; /* Увеличена максимальная ширина */
+      width: 100%;
+      max-width: 800px;
       background: white;
       border-radius: 12px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -185,8 +181,8 @@
 
     /* Подвал */
     .footer {
-      width: 100%; /* Увеличена ширина */
-      max-width: 1200px; /* Увеличена максимальная ширина */
+      width: 100%;
+      max-width: 800px;
       background: rgba(255, 255, 255, 0.8);
       border-radius: 12px;
       padding: 20px;
@@ -241,8 +237,8 @@
       font-size: 0.8rem;
       padding: 8px;
       border-radius: 8px;
-      width: 100%; /* Увеличена ширина */
-      max-width: 1200px; /* Увеличена максимальная ширина */
+      width: 100%;
+      max-width: 800px;
       margin: 0 auto 20px auto;
       box-sizing: border-box;
     }
@@ -259,13 +255,15 @@
         overflow-x: hidden;
         padding-bottom: 20px;
         margin: 0;
-        padding: 8px;
+        padding: 0; /* Убираем padding для мобильных */
       }
 
       header {
         padding: 10px 8px;
         margin-top: 15px;
         width: 100%;
+        border-radius: 0; /* Убираем скругление на мобильных */
+        margin-bottom: 10px;
       }
 
       .header-content {
@@ -286,18 +284,23 @@
 
       .container {
         padding: 12px;
-        margin: 15px auto 20px auto;
+        margin: 10px auto 20px auto;
         width: 100%;
+        border-radius: 0; /* Убираем скругление на мобильных */
+        box-shadow: none; /* Убираем тень на мобильных */
       }
 
       .event {
         padding: 12px;
+        border-radius: 8px;
       }
 
       .footer {
         padding: 15px;
         width: 100%;
         margin: 0 auto 20px auto;
+        border-radius: 0; /* Убираем скругление на мобильных */
+        box-shadow: none; /* Убираем тень на мобильных */
       }
 
       .footer-links {
@@ -314,6 +317,7 @@
         font-size: 0.75rem;
         margin-top: 15px;
         width: 100%;
+        border-radius: 0; /* Убираем скругление на мобильных */
       }
     }
 
