@@ -5,93 +5,133 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Каникулы 3 класса</title>
   <style>
+    :root {
+      --header-bg: #87CEEB;
+      --header-border: #5F9EA0;
+      --primary-color: #4a90e2;
+      --gradient-start: #667eea;
+      --gradient-end: #764ba2;
+    }
+
     body {
+      font-family: 'Segoe UI', 'Comic Sans MS', sans-serif;
+      /* Градиент неба от светло-голубого к более насыщенному */
+      background: linear-gradient(180deg, #B0E2FF 0%, #87CEEB 30%, #87CEEB 70%, #4A90E2 100%);
+      color: #333;
       margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom, #a2d9ff, #66b5ff);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      padding: 10px;
+      line-height: 1.5;
       position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
       /* Уменьшаем масштаб всего сайта на 15% */
       zoom: 0.85;
-      /* Центрируем страницу */
-      overflow-x: hidden;
     }
 
-    /* Облака — одно элемент, но с формой облака */
+    /* Стили для облаков */
     .cloud {
       position: absolute;
-      width: 150px;
-      height: 60px;
-      background: white;
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 50%;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      z-index: 1;
-      clip-path: polygon(
-        0% 40%, 10% 20%, 20% 15%, 30% 10%, 40% 15%, 
-        50% 20%, 60% 15%, 70% 10%, 80% 15%, 90% 20%, 
-        100% 40%, 90% 60%, 80% 70%, 70% 75%, 60% 70%, 
-        50% 65%, 40% 70%, 30% 75%, 20% 70%, 10% 60%
-      );
+      filter: blur(15px);
+      z-index: -1;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
     }
 
-    .cloud:nth-child(1) { top: 20%; left: 10%; width: 120px; height: 50px; }
-    .cloud:nth-child(2) { top: 30%; right: 15%; width: 160px; height: 65px; }
-    .cloud:nth-child(3) { top: 40%; left: 30%; width: 100px; height: 45px; }
-    .cloud:nth-child(4) { top: 50%; right: 25%; width: 180px; height: 70px; }
-    .cloud:nth-child(5) { top: 60%; left: 60%; width: 90px; height: 40px; }
-    .cloud:nth-child(6) { top: 70%; right: 30%; width: 130px; height: 55px; }
+    .cloud:nth-child(1) {
+      width: 120px;
+      height: 50px;
+      top: 8%;
+      left: 5%;
+    }
 
-    /* Шапка — по центру сверху */
-    .header {
+    .cloud:nth-child(2) {
+      width: 180px;
+      height: 70px;
+      top: 20%;
+      right: 10%;
+    }
+
+    .cloud:nth-child(3) {
+      width: 150px;
+      height: 60px;
+      bottom: 30%;
+      left: 15%;
+    }
+
+    .cloud:nth-child(4) {
+      width: 200px;
+      height: 80px;
+      top: 35%;
+      right: 20%;
+    }
+
+    .cloud:nth-child(5) {
+      width: 100px;
+      height: 40px;
+      bottom: 15%;
+      right: 25%;
+    }
+
+    header {
+      text-align: center;
+      background-color: var(--header-bg);
+      color: white;
+      padding: 12px 10px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+      position: relative;
+      border: 2px solid var(--header-border);
       width: 90%;
       max-width: 800px;
-      background-color: rgba(100, 170, 220, 0.8);
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
+      margin-left: auto;
+      margin-right: auto;
       margin-top: 20px;
-      z-index: 10;
-      backdrop-filter: blur(5px);
-      /* Белая граница для шапки */
-      border: 2px solid white;
       box-sizing: border-box;
     }
 
-    .header h1 {
+    h1 {
       margin: 0;
-      color: white;
-      font-size: 1.8em;
-      font-weight: bold;
+      font-size: 1.8rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      box-sizing: border-box;
     }
 
     .btn-schedule {
-      background: linear-gradient(to right, #4a90e2, #2c6cb7);
-      color: white;
-      border: 2px solid white; /* Белая граница кнопки */
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #4A90E2, #5F9EA0);
       border-radius: 25px;
-      padding: 8px 16px;
-      font-size: 14px;
+      text-decoration: none;
+      color: white;
+      font-size: 1.1rem;
       font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      border: 2px solid white;
+      position: relative;
+      overflow: hidden;
       display: flex;
       align-items: center;
       gap: 5px;
-      text-decoration: none;
       white-space: nowrap;
     }
 
     .btn-schedule:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, #357ABD, #4682B4);
+    }
+
+    .btn-schedule:active {
+      transform: translateY(0) scale(1);
     }
 
     /* Контейнер с каникулами */
@@ -99,16 +139,12 @@
       width: 90%;
       max-width: 800px;
       background: white;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      padding: 20px;
-      margin: 20px 0 30px 0;
-      z-index: 5;
-      overflow: hidden;
-      position: relative;
-      /* Белая граница для контейнера */
-      border: 2px solid white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      margin: 0 auto 30px auto;
       box-sizing: border-box;
+      border: 2px solid white;
     }
 
     .event {
@@ -117,7 +153,7 @@
       padding: 16px;
       margin-bottom: 15px;
       border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
       transition: transform 0.2s ease;
       box-sizing: border-box;
     }
@@ -152,9 +188,9 @@
       width: 90%;
       max-width: 800px;
       background: rgba(255, 255, 255, 0.8);
-      border-radius: 15px;
+      border-radius: 12px;
       padding: 20px;
-      margin: 0 0 30px 0;
+      margin: 0 auto 30px auto;
       text-align: center;
       border: 2px solid white;
       box-sizing: border-box;
@@ -174,22 +210,44 @@
     }
 
     .footer-link {
-      background: linear-gradient(to right, #4a90e2, #2c6cb7);
-      color: white;
-      padding: 10px 20px;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #4A90E2, #5F9EA0);
       border-radius: 25px;
       text-decoration: none;
+      color: white;
+      font-size: 1.1rem;
       font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      border: 2px solid white;
+      position: relative;
+      overflow: hidden;
     }
 
     .footer-link:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, #357ABD, #4682B4);
     }
 
-    /* Адаптивность для мобильных устройств */
+    .footer-link:active {
+      transform: translateY(0) scale(1);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 20px;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.8rem;
+      padding: 8px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto 20px auto;
+      box-sizing: border-box;
+    }
+
+    /* Адаптивность */
     @media (max-width: 768px) {
       body {
         zoom: 1;
@@ -201,56 +259,78 @@
         overflow-x: hidden;
         padding-bottom: 20px;
         margin: 0;
+        padding: 8px;
       }
-      
-      .header {
+
+      header {
+        padding: 10px 8px;
+        margin-top: 15px;
+      }
+
+      .header-content {
         flex-direction: column;
         gap: 10px;
         text-align: center;
         padding: 12px 15px;
-        margin-top: 15px;
-        width: 90%;
       }
-      
-      .header h1 {
-        font-size: 1.5em;
+
+      h1 {
+        font-size: 1.5rem;
       }
-      
+
       .btn-schedule {
-        font-size: 12px;
-        padding: 6px 12px;
+        padding: 8px 16px;
+        font-size: 1rem;
       }
-      
+
       .container {
-        padding: 15px;
-        margin: 15px 0 20px 0;
+        padding: 12px;
+        margin: 15px auto 20px auto;
         width: 90%;
       }
-      
+
       .event {
         padding: 12px;
       }
-      
+
       .footer {
         padding: 15px;
         width: 90%;
-        margin: 0 0 20px 0;
+        margin: 0 auto 20px auto;
       }
-      
+
       .footer-links {
         flex-direction: column;
         gap: 10px;
       }
-      
-      /* Для очень маленьких экранов */
-      @media (max-height: 600px) {
-        body {
-          transform: scale(0.8);
-        }
+
+      .footer-link {
+        padding: 10px 16px;
+        font-size: 1rem;
+      }
+
+      footer {
+        font-size: 0.75rem;
+        margin-top: 15px;
       }
     }
-    
-    /* Для очень маленьких экранов по высоте */
+
+    @media (max-width: 400px) {
+      .btn-schedule {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+      }
+
+      .footer-link {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+      }
+
+      footer {
+        font-size: 0.7rem;
+      }
+    }
+
     @media (max-height: 500px) {
       body {
         overflow-y: scroll;
@@ -266,15 +346,16 @@
   <div class="cloud"></div>
   <div class="cloud"></div>
   <div class="cloud"></div>
-  <div class="cloud"></div>
 
-  <!-- Шапка — по центру сверху с кнопкой -->
-  <div class="header">
-    <h1>Каникулы</h1>
-    <a href="https://artignat2000.github.io/schedule/" class="btn-schedule">
-      📅 Расписание
-    </a>
-  </div>
+  <!-- Шапка -->
+  <header>
+    <div class="header-content">
+      <h1>Каникулы</h1>
+      <a href="https://artignat2000.github.io/schedule/" class="btn-schedule">
+        📅 Расписание
+      </a>
+    </div>
+  </header>
 
   <!-- Основной контент -->
   <div class="container">
@@ -318,6 +399,10 @@
       <a href="https://vk.com/itcubenn" class="footer-link">IT-куб</a>
     </div>
   </div>
+
+  <footer>
+    &copy; Vlabs
+  </footer>
 
 </body>
 </html>
