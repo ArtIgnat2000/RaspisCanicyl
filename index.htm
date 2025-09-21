@@ -15,17 +15,14 @@
 
     body {
       font-family: 'Segoe UI', 'Comic Sans MS', sans-serif;
-      /* Градиент неба от светло-голубого к более насыщенному */
       background: linear-gradient(180deg, #B0E2FF 0%, #87CEEB 30%, #87CEEB 70%, #4A90E2 100%);
       color: #333;
       margin: 0;
-      padding: 10px;
+      padding: 0;
       line-height: 1.5;
       position: relative;
       min-height: 100vh;
       overflow-x: hidden;
-      /* Уменьшаем масштаб всего сайта на 15% */
-      zoom: 0.85;
     }
 
     /* Стили для облаков */
@@ -79,11 +76,10 @@
       color: white;
       padding: 12px 10px;
       border-radius: 12px;
-      margin-bottom: 15px;
+      margin: 10px;
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
       position: relative;
       border: 2px solid var(--header-border);
-      width: 100%;
       box-sizing: border-box;
     }
 
@@ -133,12 +129,8 @@
     /* Контейнер с каникулами */
     .container {
       width: 100%;
-      max-width: 800px;
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       padding: 15px;
-      margin: 0 auto 30px auto;
       box-sizing: border-box;
       border: 2px solid white;
     }
@@ -182,11 +174,10 @@
     /* Подвал */
     .footer {
       width: 100%;
-      max-width: 800px;
       background: rgba(255, 255, 255, 0.8);
       border-radius: 12px;
       padding: 20px;
-      margin: 0 auto 30px auto;
+      margin: 10px 0;
       text-align: center;
       border: 2px solid white;
       box-sizing: border-box;
@@ -232,38 +223,26 @@
 
     footer {
       text-align: center;
-      margin-top: 20px;
+      margin: 10px 0 20px 0;
       color: rgba(255, 255, 255, 0.85);
       font-size: 0.8rem;
       padding: 8px;
       border-radius: 8px;
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto 20px auto;
       box-sizing: border-box;
     }
 
     /* Адаптивность */
     @media (max-width: 768px) {
       body {
-        zoom: 1;
-        transform: scale(0.85);
-        transform-origin: top center;
-        width: 100vw;
-        min-height: 100vh;
-        overflow-y: auto;
-        overflow-x: hidden;
-        padding-bottom: 20px;
-        margin: 0;
-        padding: 0; /* Убираем padding для мобильных */
+        padding: 0;
       }
 
       header {
-        padding: 10px 8px;
-        margin-top: 15px;
-        width: 100%;
-        border-radius: 0; /* Убираем скругление на мобильных */
-        margin-bottom: 10px;
+        margin: 0;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        border-top: none;
       }
 
       .header-content {
@@ -284,23 +263,20 @@
 
       .container {
         padding: 12px;
-        margin: 10px auto 20px auto;
-        width: 100%;
-        border-radius: 0; /* Убираем скругление на мобильных */
-        box-shadow: none; /* Убираем тень на мобильных */
+        border-left: none;
+        border-right: none;
       }
 
       .event {
         padding: 12px;
-        border-radius: 8px;
       }
 
       .footer {
         padding: 15px;
-        width: 100%;
-        margin: 0 auto 20px auto;
-        border-radius: 0; /* Убираем скругление на мобильных */
-        box-shadow: none; /* Убираем тень на мобильных */
+        margin: 0;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
       }
 
       .footer-links {
@@ -316,8 +292,7 @@
       footer {
         font-size: 0.75rem;
         margin-top: 15px;
-        width: 100%;
-        border-radius: 0; /* Убираем скругление на мобильных */
+        border-radius: 0;
       }
     }
 
