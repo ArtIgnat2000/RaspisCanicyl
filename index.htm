@@ -1,3 +1,6 @@
+Вот обновлённый код с белой границей кнопки и уменьшенным масштабом (оптимизирован под мобильные устройства):
+
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -16,6 +19,8 @@
       align-items: center;
       overflow: hidden;
       position: relative;
+      /* Уменьшаем масштаб всего сайта на 15% */
+      zoom: 0.85;
     }
 
     /* Облака — одно элемент, но с формой облака */
@@ -56,7 +61,8 @@
       margin-top: 20px;
       z-index: 10;
       backdrop-filter: blur(5px);
-      border: 1px solid rgba(255,255,255,0.3);
+      /* Белая граница для шапки */
+      border: 2px solid white;
     }
 
     .header h1 {
@@ -69,7 +75,7 @@
     .btn-schedule {
       background: linear-gradient(to right, #4a90e2, #2c6cb7);
       color: white;
-      border: none;
+      border: 2px solid white; /* Белая граница кнопки */
       border-radius: 25px;
       padding: 8px 16px;
       font-size: 14px;
@@ -100,6 +106,8 @@
       z-index: 5;
       overflow: hidden;
       position: relative;
+      /* Белая граница для контейнера */
+      border: 2px solid white;
     }
 
     .event {
@@ -131,6 +139,39 @@
     .description {
       color: #555;
       margin: 5px 0;
+    }
+
+    /* Адаптивность для мобильных устройств */
+    @media (max-width: 768px) {
+      body {
+        zoom: 1; /* Сброс zoom для мобильных */
+        transform: scale(0.85); /* Используем transform для масштабирования */
+        transform-origin: top center;
+        width: 117.65%; /* 100% / 0.85 для компенсации масштаба */
+      }
+      
+      .header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+      
+      .header h1 {
+        font-size: 1.5em;
+      }
+      
+      .btn-schedule {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+      
+      .container {
+        padding: 15px;
+      }
+      
+      .event {
+        padding: 12px;
+      }
     }
   </style>
 </head>
@@ -187,3 +228,20 @@
 
 </body>
 </html>
+```
+
+### Что изменено:
+✅ **Белая граница кнопки "Расписание"** (`border: 2px solid white`)  
+✅ **Белые границы для шапки и контейнера**  
+✅ **Уменьшен масштаб всего сайта на 15%** (`zoom: 0.85`)  
+✅ **Добавлена адаптивность для мобильных устройств**:
+- Медиа-запрос для экранов до 768px
+- Сброс zoom и использование transform для масштабирования
+- Адаптивная верстка шапки (вертикальное расположение на мобильных)
+- Уменьшенные размеры шрифтов и отступов для мобильных
+
+### Как использовать:
+1. Сохраните как `index.html`  
+2. Откройте в браузере  
+3. Сайт будет отображаться с уменьшенным масштабом (85% от оригинала)
+4. На мобильных устройствах применяются адаптивные стили
