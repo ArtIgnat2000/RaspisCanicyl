@@ -17,6 +17,8 @@
       position: relative;
       /* Уменьшаем масштаб всего сайта на 15% */
       zoom: 0.85;
+      /* Центрируем страницу */
+      overflow-x: hidden;
     }
 
     /* Облака — одно элемент, но с формой облака */
@@ -59,6 +61,7 @@
       backdrop-filter: blur(5px);
       /* Белая граница для шапки */
       border: 2px solid white;
+      box-sizing: border-box;
     }
 
     .header h1 {
@@ -99,12 +102,13 @@
       border-radius: 15px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       padding: 20px;
-      margin: 20px 0 30px 0; /* Добавлен нижний отступ */
+      margin: 20px 0 30px 0;
       z-index: 5;
       overflow: hidden;
       position: relative;
       /* Белая граница для контейнера */
       border: 2px solid white;
+      box-sizing: border-box;
     }
 
     .event {
@@ -115,10 +119,11 @@
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.05);
       transition: transform 0.2s ease;
+      box-sizing: border-box;
     }
 
     .event:last-child {
-      margin-bottom: 0; /* Убираем отступ у последнего элемента */
+      margin-bottom: 0;
     }
 
     .event:hover {
@@ -148,11 +153,12 @@
         zoom: 1;
         transform: scale(0.85);
         transform-origin: top center;
-        width: 117.65%;
+        width: 100vw;
         min-height: 100vh;
-        overflow-y: auto; /* Разрешаем вертикальную прокрутку */
-        overflow-x: hidden; /* Запрещаем горизонтальную прокрутку */
-        padding-bottom: 20px; /* Добавляем отступ снизу */
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-bottom: 20px;
+        margin: 0;
       }
       
       .header {
@@ -161,6 +167,7 @@
         text-align: center;
         padding: 12px 15px;
         margin-top: 15px;
+        width: 90%;
       }
       
       .header h1 {
@@ -175,7 +182,7 @@
       .container {
         padding: 15px;
         margin: 15px 0 20px 0;
-        width: 92%;
+        width: 90%;
       }
       
       .event {
