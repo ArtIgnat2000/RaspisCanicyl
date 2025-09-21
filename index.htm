@@ -21,11 +21,14 @@
     }
     header {
       background: linear-gradient(to right, #80deea, #b2ebf2, #80deea);
-      padding: 40px 20px;
+      padding: 20px; /* Уменьшенный отступ */
       text-align: center;
       border-bottom: 6px solid #4dd0e1;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .logo-circle {
       width: 100px;
@@ -53,15 +56,40 @@
     h1 {
       font-size: 2.8em;
       color: #01579b;
-      margin: 0;
+      margin: 0 0 10px 0; /* Убран нижний отступ */
       font-weight: 700;
       letter-spacing: 1px;
     }
     .subtitle {
       font-size: 1.3em;
       color: #0288d1;
-      margin-top: 10px;
+      margin-top: 5px; /* Уменьшен отступ */
+      margin-bottom: 15px; /* Добавлен отступ снизу */
       font-weight: 500;
+    }
+    /* Стили для кнопки */
+    .schedule-button {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #00796b; /* Темно-бирюзовый цвет */
+      color: white;
+      text-decoration: none;
+      border-radius: 50px; /* Круглые края */
+      font-weight: bold;
+      font-size: 1.1em;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      margin-top: 10px; /* Отступ сверху */
+      border: 2px solid #004d40; /* Граница */
+    }
+    .schedule-button:hover {
+      background-color: #004d40; /* Более темный цвет при наведении */
+      transform: translateY(-3px); /* Подъем при наведении */
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    }
+    .schedule-button:active {
+      transform: translateY(1px); /* Нажатие */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
     .container {
       max-width: 850px;
@@ -136,6 +164,8 @@
     <div class="logo-circle">📚</div>
     <h1>🌴 Каникулы 🌴</h1>
     <div class="subtitle">Учебный год 2025–2026</div>
+    <!-- Кнопка "Расписание" -->
+    <a href="https://artignat2000.github.io/schedule/" target="_blank" class="schedule-button">📅 Расписание</a>
   </header>
   <div class="wave"></div>
   <div class="container">
@@ -193,9 +223,9 @@
       <h2>🔗 Полезные ссылки</h2>
       <p>Ресурсы для учёбы и развития:</p>
       <ul style="list-style: disc; padding-left: 20px;">
-        <li><a href="https://artignat2000.github.io/schedule/" target="_blank">Расписание</a></li>
-        <li><a href="https://uchi.ru/" target="_blank">Учи.ру</a></li>
-        <li><a href="https://vk.com/naash186" target="_blank">Наша школа</a></li>
+        <li><a href="https://artignat2000.github.io/schedule/  " target="_blank">Расписание</a></li>
+        <li><a href="https://uchi.ru/  " target="_blank">Учи.ру</a></li>
+        <li><a href="https://vk.com/naash186  " target="_blank">Наша школа</a></li>
       </ul>
     </div>
   </div>
