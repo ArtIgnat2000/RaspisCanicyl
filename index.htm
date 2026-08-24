@@ -3,14 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🌴Каникулы 3 класса</title>
+  <title>🌴Календарь каникул 3 класса</title>
   <style>
     :root {
       --header-bg: #87CEEB;
       --header-border: #5F9EA0;
       --primary-color: #4a90e2;
-      --gradient-start: #667eea;
-      --gradient-end: #764ba2;
+      
+      /* Цвета для типов каникул */
+      --color-autumn: #ff9f43;
+      --color-winter: #54a0ff;
+      --color-spring: #1dd1a1;
+      --color-special: #ff6b6b;
+      --color-last-day: #ee5253;
     }
 
     body {
@@ -25,7 +30,7 @@
       overflow-x: hidden;
     }
 
-    /* Стили для облаков */
+    /* Стили для облаков (без изменений) */
     .cloud {
       position: absolute;
       background: rgba(255, 255, 255, 0.9);
@@ -34,41 +39,11 @@
       z-index: -1;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
     }
-
-    .cloud:nth-child(1) {
-      width: 120px;
-      height: 50px;
-      top: 8%;
-      left: 5%;
-    }
-
-    .cloud:nth-child(2) {
-      width: 180px;
-      height: 70px;
-      top: 20%;
-      right: 10%;
-    }
-
-    .cloud:nth-child(3) {
-      width: 150px;
-      height: 60px;
-      bottom: 30%;
-      left: 15%;
-    }
-
-    .cloud:nth-child(4) {
-      width: 200px;
-      height: 80px;
-      top: 35%;
-      right: 20%;
-    }
-
-    .cloud:nth-child(5) {
-      width: 100px;
-      height: 40px;
-      bottom: 15%;
-      right: 25%;
-    }
+    .cloud:nth-child(1) { width: 120px; height: 50px; top: 8%; left: 5%; }
+    .cloud:nth-child(2) { width: 180px; height: 70px; top: 20%; right: 10%; }
+    .cloud:nth-child(3) { width: 150px; height: 60px; bottom: 30%; left: 15%; }
+    .cloud:nth-child(4) { width: 200px; height: 80px; top: 35%; right: 20%; }
+    .cloud:nth-child(5) { width: 100px; height: 40px; bottom: 15%; right: 25%; }
 
     header {
       text-align: center;
@@ -83,11 +58,7 @@
       box-sizing: border-box;
     }
 
-    h1 {
-      margin: 0;
-      font-size: 1.8rem;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    }
+    h1 { margin: 0; font-size: 1.8rem; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); }
 
     .header-content {
       display: flex;
@@ -108,13 +79,11 @@
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       border: 2px solid white;
-      position: relative;
-      overflow: hidden;
       display: flex;
       align-items: center;
       gap: 5px;
       white-space: nowrap;
-      text-transform: uppercase; /* Делаем текст заглавным */
+      text-transform: uppercase;
     }
 
     .btn-schedule:hover {
@@ -123,71 +92,127 @@
       background: linear-gradient(135deg, #357ABD, #4682B4);
     }
 
-    .btn-schedule:active {
-      transform: translateY(0) scale(1);
-    }
-
-    /* Контейнер с каникулами */
+    /* Контейнер с календарем */
     .container {
       width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
       background: white;
-      padding: 15px;
+      padding: 20px;
       box-sizing: border-box;
       border: 2px solid white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
 
-    .event {
+    /* Легенда */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px dashed #ccc;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Сетка календаря */
+    .calendar-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .month-card {
       background: #f8fbfd;
-      border-left: 6px solid #4a90e2;
-      padding: 16px;
-      margin-bottom: 15px;
       border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-      transition: transform 0.2s ease;
-      box-sizing: border-box;
+      padding: 10px;
+      border: 1px solid #e1e8ed;
     }
 
-    .event:last-child {
-      margin-bottom: 0;
-    }
-
-    .event:hover {
-      transform: scale(1.01);
-    }
-
-    .date {
+    .month-name {
+      text-align: center;
       font-weight: bold;
       color: #1e5799;
-      font-size: 1.1em;
+      margin-bottom: 10px;
+      text-transform: capitalize;
+      font-size: 1.1rem;
     }
 
-    .title {
-      color: #5d89c2;
-      font-style: italic;
-      margin: 5px 0;
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      text-align: center;
     }
 
-    .description {
-      color: #555;
-      margin: 5px 0;
+    .weekday {
+      font-size: 0.75rem;
+      color: #888;
+      padding: 5px 0;
+      font-weight: bold;
     }
+
+    .day {
+      padding: 8px 0;
+      font-size: 0.9rem;
+      border-radius: 4px;
+      cursor: default;
+      position: relative;
+    }
+
+    .day.empty { pointer-events: none; }
+
+    /* Стили выделенных дат */
+    .day.highlight {
+      color: white;
+      font-weight: bold;
+      cursor: help;
+      transition: transform 0.2s;
+    }
+
+    .day.highlight:hover {
+      transform: scale(1.2);
+      z-index: 10;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* Типы каникул */
+    .type-autumn { background-color: var(--color-autumn); }
+    .type-winter { background-color: var(--color-winter); }
+    .type-spring { background-color: var(--color-spring); }
+    .type-special { background-color: var(--color-special); }
+    .type-last-day { background-color: var(--color-last-day); }
 
     /* Подвал */
     .footer {
       width: 100%;
-      background: rgba(255, 255, 255, 0.8);
+      max-width: 1000px;
+      margin: 20px auto;
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 12px;
       padding: 20px;
-      margin: 10px 0;
       text-align: center;
       border: 2px solid white;
       box-sizing: border-box;
     }
 
-    .footer h3 {
-      color: #1e5799;
-      margin-top: 0;
-    }
+    .footer h3 { color: #1e5799; margin-top: 0; }
 
     .footer-links {
       display: flex;
@@ -208,176 +233,57 @@
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       border: 2px solid white;
-      position: relative;
-      overflow: hidden;
-      text-transform: uppercase; /* Делаем текст заглавным */
+      text-transform: uppercase;
     }
 
     .footer-link:hover {
       transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
       background: linear-gradient(135deg, #357ABD, #4682B4);
     }
 
-    .footer-link:active {
-      transform: translateY(0) scale(1);
-    }
-
-    footer {
+    footer.copyright {
       text-align: center;
       margin: 10px 0 20px 0;
-      color: rgba(255, 255, 255, 0.85);
+      color: rgba(255, 255, 255, 0.9);
       font-size: 0.8rem;
-      padding: 8px;
-      border-radius: 8px;
-      box-sizing: border-box;
     }
 
     /* Адаптивность */
     @media (max-width: 768px) {
-      body {
-        padding: 0;
-      }
-
-      header {
-        margin: 0;
-        border-radius: 0;
-        border-left: none;
-        border-right: none;
-        border-top: none;
-        padding: 10px 5px;
-        border: 2px solid var(--header-border);
-        border-radius: 12px 12px 0 0;
-      }
-
-      .header-content {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-        padding: 12px 10px;
-      }
-
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .btn-schedule {
-        padding: 8px 16px;
-        font-size: 1rem;
-      }
-
-      .container {
-        padding: 10px 5px;
-        border-left: none;
-        border-right: none;
-        border: 2px solid white;
-      }
-
-      .event {
-        padding: 12px 10px;
-        margin-bottom: 10px;
-      }
-
-      .footer {
-        padding: 15px 10px;
-        margin: 0;
-        border-radius: 0;
-        border-left: none;
-        border-right: none;
-        border: 2px solid white;
-      }
-
-      .footer-links {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .footer-link {
-        padding: 10px 16px;
-        font-size: 1rem;
-      }
-
-      footer {
-        font-size: 0.75rem;
-        margin-top: 15px;
-        border-radius: 0;
-        padding: 8px 5px;
-      }
-    }
-
-    @media (max-width: 400px) {
-      .btn-schedule {
-        padding: 6px 12px;
-        font-size: 0.9rem;
-      }
-
-      .footer-link {
-        padding: 8px 12px;
-        font-size: 0.9rem;
-      }
-
-      footer {
-        font-size: 0.7rem;
-      }
-    }
-
-    @media (max-height: 500px) {
-      body {
-        overflow-y: scroll;
-      }
+      .header-content { flex-direction: column; gap: 10px; padding: 10px; }
+      h1 { font-size: 1.5rem; }
+      .calendar-wrapper { grid-template-columns: 1fr; }
+      .container { padding: 10px; margin: 0; border-radius: 0; border-left: none; border-right: none;}
+      header { margin: 0; border-radius: 0 0 12px 12px; }
     }
   </style>
 </head>
 <body>
 
   <!-- Облака -->
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-  <div class="cloud"></div>
+  <div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div>
 
   <!-- Шапка -->
   <header>
     <div class="header-content">
       <h1>🌴 Каникулы</h1>
-      <a href="https://artignat2000.github.io/schedule/" class="btn-schedule">
-        📚 РАСПИСАНИЕ
-      </a>
+      <a href="https://artignat2000.github.io/schedule/" class="btn-schedule">📚 РАСПИСАНИЕ</a>
     </div>
   </header>
 
   <!-- Основной контент -->
   <div class="container">
-    <div class="event">
-      <div class="date">27 октября – 4 ноября 2025</div>
-      <div class="title">Осенние каникулы</div>
-      <div class="description">Первые заморозки, подготовка к зиме.</div>
+    <!-- Легенда -->
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot" style="background:var(--color-autumn)"></span>Осенние</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--color-winter)"></span>Зимние</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--color-special)"></span>Доп. (1 класс)</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--color-spring)"></span>Весенние</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--color-last-day)"></span>Последний день</div>
     </div>
 
-    <div class="event">
-      <div class="date">29 декабря 2025 – 11 января 2026</div>
-      <div class="title">Зимние каникулы</div>
-      <div class="description">Новогодние праздники, снег, ёлка, подарки, отдых!</div>
-    </div>
-
-    <div class="event">
-      <div class="date">16 февраля – 22 февраля 2026</div>
-      <div class="title">Дополнительные каникулы для 1 класса</div>
-      <div class="description">Масленица, карнавалы, подготовка к весне.</div>
-    </div>
-
-    <div class="event">
-      <div class="date">30 марта – 5 апреля 2026</div>
-      <div class="title">Весенние каникулы</div>
-      <div class="description">Тепло, цветение, прогулки, оживление природы.</div>
-    </div>
-
-    <div class="event">
-      <div class="date">26 мая 2026</div>
-      <div class="title">Последний учебный день</div>
-      <div class="description">Завершение учебного года, выпускные, отчётные мероприятия.</div>
-    </div>
+    <!-- Сюда JS вставит календарь -->
+    <div id="calendar-root" class="calendar-wrapper"></div>
   </div>
 
   <!-- Подвал -->
@@ -390,9 +296,139 @@
     </div>
   </div>
 
-  <footer>
-    &copy; 2025
-  </footer>
+  <footer class="copyright">&copy; 2025</footer>
 
+  <script>
+    // Данные о каникулах
+    const holidays = [
+      { 
+        start: '2025-10-27', 
+        end: '2025-11-04', 
+        title: 'Осенние каникулы', 
+        type: 'autumn' 
+      },
+      { 
+        start: '2025-12-29', 
+        end: '2026-01-11', 
+        title: 'Зимние каникулы', 
+        type: 'winter' 
+      },
+      { 
+        start: '2026-02-16', 
+        end: '2026-02-22', 
+        title: 'Дополнительные (1 класс)', 
+        type: 'special' 
+      },
+      { 
+        start: '2026-03-30', 
+        end: '2026-04-05', 
+        title: 'Весенние каникулы', 
+        type: 'spring' 
+      },
+      { 
+        start: '2026-05-26', 
+        end: '2026-05-26', 
+        title: 'Последний учебный день', 
+        type: 'last-day' 
+      }
+    ];
+
+    // Функция для получения всех дат между двумя датами
+    function getDatesInRange(startDate, endDate) {
+      const dates = new Set();
+      let currentDate = new Date(startDate);
+      const end = new Date(endDate);
+      
+      while (currentDate <= end) {
+        // Форматируем как YYYY-MM-DD для сравнения
+        dates.add(currentDate.toISOString().split('T')[0]);
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+      return dates;
+    }
+
+    // Создаем карту всех праздничных дат: { "2025-10-27": { title: "...", type: "..." } }
+    const holidayMap = {};
+    holidays.forEach(h => {
+      const range = getDatesInRange(h.start, h.end);
+      range.forEach(dateStr => {
+        holidayMap[dateStr] = { title: h.title, type: h.type };
+      });
+    });
+
+    // Определяем диапазон месяцев для отображения (с октября 2025 по май 2026)
+    const startMonth = new Date(2025, 9, 1); // Октябрь 2025 (месяцы с 0)
+    const endMonth = new Date(2026, 4, 31);   // Май 2026
+
+    const calendarRoot = document.getElementById('calendar-root');
+    const monthNames = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+    const weekDays = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+
+    let currentRenderDate = new Date(startMonth);
+
+    while (currentRenderDate <= endMonth) {
+      const year = currentRenderDate.getFullYear();
+      const month = currentRenderDate.getMonth();
+      
+      // Создаем карточку месяца
+      const monthCard = document.createElement('div');
+      monthCard.className = 'month-card';
+      
+      const monthTitle = document.createElement('div');
+      monthTitle.className = 'month-name';
+      monthTitle.textContent = `${monthNames[month]} ${year}`;
+      monthCard.appendChild(monthTitle);
+
+      const daysGrid = document.createElement('div');
+      daysGrid.className = 'days-grid';
+
+      // Заголовки дней недели
+      weekDays.forEach(d => {
+        const wd = document.createElement('div');
+        wd.className = 'weekday';
+        wd.textContent = d;
+        daysGrid.appendChild(wd);
+      });
+
+      // Вычисляем первый день месяца и количество дней
+      const firstDayOfMonth = new Date(year, month, 1);
+      const lastDayOfMonth = new Date(year, month + 1, 0);
+      
+      // Корректировка: getDay() возвращает 0 для Вс, нам нужно 0 для Пн
+      let startDay = firstDayOfMonth.getDay(); 
+      if (startDay === 0) startDay = 7;
+      startDay = startDay - 1; 
+
+      // Пустые ячейки до начала месяца
+      for (let i = 0; i < startDay; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'day empty';
+        daysGrid.appendChild(empty);
+      }
+
+      // Дни месяца
+      for (let d = 1; d <= lastDayOfMonth.getDate(); d++) {
+        const dayEl = document.createElement('div');
+        dayEl.className = 'day';
+        dayEl.textContent = d;
+
+        // Проверяем, является ли дата каникулярной
+        const dateKey = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        
+        if (holidayMap[dateKey]) {
+          dayEl.classList.add('highlight', `type-${holidayMap[dateKey].type}`);
+          dayEl.title = holidayMap[dateKey].title; // Всплывающая подсказка
+        }
+
+        daysGrid.appendChild(dayEl);
+      }
+
+      monthCard.appendChild(daysGrid);
+      calendarRoot.appendChild(monthCard);
+
+      // Переход к следующему месяцу
+      currentRenderDate.setMonth(currentRenderDate.getMonth() + 1);
+    }
+  </script>
 </body>
 </html>
