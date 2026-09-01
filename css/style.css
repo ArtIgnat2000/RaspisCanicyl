@@ -1,0 +1,902 @@
+/* ============================================================
+   Школьное расписание · v2.2.0
+   Дизайн-система в стиле iOS 26 (Liquid Glass)
+   ============================================================ */
+
+:root {
+  --bg: #F2F2F7;
+  --bg-grad-a: rgba(10, 132, 255, 0.10);
+  --bg-grad-b: rgba(94, 92, 230, 0.08);
+  --bg-grad-c: rgba(52, 199, 89, 0.07);
+
+  --glass: rgba(255, 255, 255, 0.68);
+  --glass-strong: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+
+  --text: #1C1C1E;
+  --text-2: #6E6E73;
+  --text-3: #AEAEB2;
+  --separator: rgba(60, 60, 67, 0.10);
+
+  --accent: #0A84FF;
+  --accent-soft: rgba(10, 132, 255, 0.12);
+  --red: #FF3B30;
+  --red-soft: rgba(255, 59, 48, 0.10);
+  --green: #34C759;
+  --green-soft: rgba(52, 199, 89, 0.16);
+  --orange: #FF9500;
+  --orange-soft: rgba(255, 149, 0, 0.12);
+  --purple: #AF52DE;
+  --purple-soft: rgba(175, 82, 222, 0.12);
+
+  --seg-bg: rgba(120, 120, 128, 0.14);
+  --seg-thumb: #FFFFFF;
+
+  --radius-l: 24px;
+  --radius-m: 16px;
+  --radius-s: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --bg-grad-a: rgba(10, 132, 255, 0.14);
+    --bg-grad-b: rgba(94, 92, 230, 0.12);
+    --bg-grad-c: rgba(48, 209, 88, 0.08);
+
+    --glass: rgba(28, 28, 30, 0.66);
+    --glass-strong: rgba(44, 44, 46, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.10);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+
+    --text: #F2F2F7;
+    --text-2: #98989F;
+    --text-3: #636366;
+    --separator: rgba(84, 84, 88, 0.48);
+
+    --accent-soft: rgba(10, 132, 255, 0.22);
+    --red: #FF453A;
+    --red-soft: rgba(255, 69, 58, 0.18);
+    --green: #30D158;
+    --green-soft: rgba(48, 209, 88, 0.20);
+    --orange-soft: rgba(255, 159, 10, 0.18);
+    --purple-soft: rgba(191, 90, 242, 0.20);
+
+    --seg-bg: rgba(118, 118, 128, 0.24);
+    --seg-thumb: #636366;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+               Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.45;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Мягкий цветовой фон под «стеклом» */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(600px 400px at 12% -5%, var(--bg-grad-a), transparent 70%),
+    radial-gradient(700px 500px at 100% 10%, var(--bg-grad-b), transparent 70%),
+    radial-gradient(700px 500px at 50% 110%, var(--bg-grad-c), transparent 70%);
+}
+
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px 16px 40px;
+}
+
+/* ---------- Шапка ---------- */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin: -16px -16px 14px;
+  padding: 9px 14px;
+  background: var(--glass);
+  border-bottom: 1px solid var(--glass-border);
+  backdrop-filter: blur(24px) saturate(1.7);
+  -webkit-backdrop-filter: blur(24px) saturate(1.7);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+}
+
+.topbar-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.title-block {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.title-block h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+/* Контекстный пояснитель убран из визуальной шапки на всех страницах. */
+.title-block .subtitle { display: none; }
+
+.section-kicker {
+  color: var(--text-3);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.settings-button {
+  display: inline-flex;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  background: var(--glass-strong);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  color: var(--text);
+  font-size: 1.05rem;
+  text-decoration: none;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.settings-button:hover { transform: scale(1.04); }
+.settings-button:active { transform: scale(0.95); }
+.settings-button.current { background: var(--accent); border-color: transparent; }
+
+.nav {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+  gap: 3px;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 2px 0;
+  scrollbar-width: none;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav::-webkit-scrollbar { display: none; }
+
+.nav a {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 36px;
+  padding: 7px 9px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-2);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 650;
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.nav a:hover { background: var(--seg-bg); color: var(--text); }
+.nav a:active { transform: scale(0.97); }
+.nav a.current { background: var(--accent); color: #fff; }
+
+/* ---------- Стеклянные карточки ---------- */
+
+.card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-l);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.card .hint {
+  color: var(--text-2);
+  font-size: 0.85rem;
+  margin: 8px 0 0;
+}
+
+/* ---------- Сегмент-контрол ---------- */
+
+.segmented {
+  display: flex;
+  background: var(--seg-bg);
+  border-radius: 12px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.segmented button {
+  flex: 1;
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: 9px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.segmented button.active {
+  background: var(--seg-thumb);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.segmented button.off-day { color: var(--red); }
+
+.segmented.large button { padding: 10px 12px; font-size: 1rem; }
+
+/* ---------- Статус текущего дня ---------- */
+
+.today-status {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-m);
+  background: var(--accent-soft);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.today-status.vacation { background: var(--green-soft); }
+.today-status.holiday,
+.today-status.weekend { background: var(--red-soft); color: var(--red); }
+.today-status.before-year,
+.today-status.after-year { background: var(--orange-soft); }
+
+/* ---------- Список уроков ---------- */
+
+.lesson-list { list-style: none; margin: 0; padding: 0; }
+
+.lesson-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 6px;
+  border-bottom: 1px solid var(--separator);
+}
+
+.lesson-list li:last-child { border-bottom: none; }
+
+.lesson-num {
+  flex: 0 0 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lesson-time {
+  flex: 0 0 96px;
+  color: var(--text-2);
+  font-size: 0.86rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.lesson-title {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.98rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.lesson-title .place {
+  display: block;
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: var(--text-2);
+}
+
+.lesson-list li.lesson-current,
+.lesson-list li.lesson-next {
+  margin: 4px 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: var(--radius-s);
+  border-bottom-color: transparent;
+}
+
+.lesson-list li.lesson-current { background: var(--green-soft); }
+.lesson-list li.lesson-next { background: var(--accent-soft); }
+
+.lesson-state {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.lesson-state.current { color: var(--green); background: var(--glass-strong); }
+.lesson-state.next { color: var(--accent); background: var(--glass-strong); }
+
+/* Значок типа занятия (персональные страницы) */
+.act-badge {
+  flex: 0 0 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+}
+.act-badge.sport { background: var(--green-soft); }
+.act-badge.lesson { background: var(--accent-soft); }
+.act-badge.club { background: var(--purple-soft); }
+.act-badge.other { background: var(--orange-soft); }
+
+.empty-note {
+  color: var(--text-2);
+  font-size: 0.92rem;
+  text-align: center;
+  padding: 18px 8px;
+}
+
+/* ---------- Секции внутри дня (персональная страница) ---------- */
+
+.day-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.day-section-title:first-child { margin-top: 4px; }
+
+/* ---------- Календарь каникул ---------- */
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  font-size: 0.86rem;
+  color: var(--text-2);
+}
+
+.legend span { display: inline-flex; align-items: center; gap: 7px; font-weight: 500; }
+
+.legend i {
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  display: inline-block;
+  border: 1px solid var(--separator);
+}
+.legend i.li-school { background: var(--glass-strong); }
+.legend i.li-off { background: var(--glass-strong); position: relative; }
+.legend i.li-off::after {
+  content: "1";
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--red); font-size: 10px; font-weight: 700;
+}
+.legend i.li-vac { background: var(--green-soft); border-color: transparent; }
+.legend i.li-today { border: 2px solid var(--accent); background: transparent; }
+
+.vac-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.vac-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: var(--radius-m);
+  background: var(--green-soft);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.vac-item:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(52, 199, 89, 0.16); }
+.vac-item:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.vac-item .v-emoji { font-size: 1.3rem; }
+.vac-item .v-name { font-weight: 650; font-size: 0.92rem; }
+.vac-item .v-dates { color: var(--text-2); font-size: 0.82rem; font-weight: 500; }
+.vac-item.optional { background: var(--orange-soft); }
+
+.months-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.cal-month {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-l);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  box-shadow: var(--shadow);
+  padding: 14px 14px 16px;
+}
+
+.cal-month h3 {
+  margin: 2px 4px 10px;
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.cal-dow {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+  padding: 4px 0 6px;
+  text-transform: uppercase;
+}
+
+.cal-dow.we { color: var(--red); opacity: 0.75; }
+
+.system-meta,
+.setting-note {
+  margin: 8px 2px 0;
+  color: var(--text-2);
+  font-size: 0.84rem;
+  font-weight: 500;
+}
+
+.settings-card .section-kicker { margin-bottom: 7px; }
+
+.action-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: var(--radius-m);
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.94rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.action-button:hover { filter: brightness(1.04); transform: translateY(-1px); }
+.action-button:active { transform: scale(0.98); }
+
+.countdown {
+  margin: -2px 0 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-m);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.countdown.vacation { background: var(--green-soft); color: var(--green); }
+.countdown.holiday,
+.countdown.weekend { background: var(--red-soft); color: var(--red); }
+
+.cal-day {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  background: var(--glass-strong);          /* учебный день — белый фон */
+  color: var(--text);                        /* учебный день — чёрный текст */
+}
+
+.cal-day.blank { background: transparent; }
+
+.cal-day.off { color: var(--red); font-weight: 600; }   /* выходной / праздник */
+
+.cal-day.vac { background: var(--green-soft); }          /* каникулы — зелёный фон */
+
+.cal-day.today::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+}
+
+.cal-day.special::before {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.cal-month.period-focus {
+  box-shadow: 0 0 0 3px var(--green), var(--shadow);
+}
+
+.cal-day.period-focus {
+  box-shadow: inset 0 0 0 2px var(--green);
+  animation: periodPulse 1.6s ease-in-out 2;
+}
+
+@keyframes periodPulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.08); }
+}
+
+/* ---------- Питание ---------- */
+
+.meal-board {
+  padding: 0;
+  overflow: hidden;
+}
+
+.meal-body { padding: 16px 18px 12px; }
+
+/* Компактная таблица «приём пищи — время» */
+.meal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.meal-table th {
+  text-align: left;
+  color: var(--text-3);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 6px 8px;
+}
+
+.meal-table th:last-child,
+.meal-table td:last-child { text-align: right; }
+
+.meal-table td {
+  padding: 10px 6px;
+  border-top: 1px solid var(--separator);
+  vertical-align: middle;
+}
+
+.meal-table tbody tr:first-child td { border-top: none; }
+
+.meal-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.meal-emoji { font-size: 1.15rem; line-height: 1; }
+
+.meal-time-cell {
+  color: var(--text);
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.meal-info-block {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--separator);
+}
+
+.meal-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 18px;
+  margin-top: 7px;
+}
+
+.meal-info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 4px 0;
+}
+
+.meal-info-icon { flex: 0 0 auto; font-size: 1.05rem; }
+.meal-info-label { color: var(--text-2); font-size: 0.73rem; font-weight: 600; }
+.meal-info-value { margin-top: 1px; font-size: 0.82rem; font-weight: 650; line-height: 1.22; }
+
+/* ---------- Выбор ученика (настройки) ---------- */
+
+.student-picker { display: flex; flex-direction: column; gap: 8px; }
+
+.student-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-m);
+  background: var(--glass-strong);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.student-option:hover { background: var(--seg-bg); }
+.student-option:active { transform: scale(0.99); }
+.student-option:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.student-option.active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.student-option.none { color: var(--text-2); font-weight: 550; }
+
+.student-name { flex: 1; min-width: 0; }
+
+.student-check {
+  flex: 0 0 auto;
+  width: 20px;
+  color: var(--accent);
+  font-weight: 800;
+  text-align: center;
+}
+
+.link-button {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  margin-top: 10px;
+  color: var(--red);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.link-button:hover { opacity: 0.75; }
+
+/* ---------- Список учеников ---------- */
+
+.student-list { list-style: none; margin: 0; padding: 0; }
+
+.student-list a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 6px;
+  border-bottom: 1px solid var(--separator);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.15s ease;
+}
+
+.student-list li:last-child a { border-bottom: none; }
+.student-list a:active { opacity: 0.6; }
+
+.student-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+}
+
+.student-class {
+  margin-left: auto;
+  color: var(--text-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--seg-bg);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+.chevron { color: var(--text-3); font-size: 1.1rem; margin-left: 4px; }
+
+/* ---------- Таблица оценок ---------- */
+
+.rating-grid { display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; align-items: center; }
+
+.rating-pill {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.rating-pill.r { background: var(--red-soft); color: var(--red); }
+.rating-pill.y { background: var(--orange-soft); color: var(--orange); }
+.rating-pill.g { background: var(--green-soft); color: var(--green); }
+.rating-desc { font-size: 0.92rem; font-weight: 500; }
+
+/* ---------- Служебное ---------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.error-card {
+  border-radius: var(--radius-l);
+  background: var(--red-soft);
+  color: var(--red);
+  padding: 16px 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.loading { color: var(--text-2); text-align: center; padding: 30px 0; }
+
+footer {
+  text-align: center;
+  color: var(--text-3);
+  font-size: 0.8rem;
+  padding-top: 20px;
+}
+
+footer a { color: var(--text-2); }
+
+/* ---------- Мобильная адаптация ---------- */
+
+@media (max-width: 600px) {
+  .page { padding: 12px 10px 96px; }
+  .topbar { margin: -12px -10px 14px; padding: 9px 10px; }
+  .topbar-main { gap: 9px; }
+  .title-block { flex: 0 1 auto; }
+  .title-block h1 { font-size: 1.3rem; }
+  .settings-button { flex-basis: 38px; width: 38px; height: 38px; }
+  .card { padding: 14px; border-radius: 20px; }
+  .segmented button { padding: 8px 4px; font-size: 0.85rem; }
+  .lesson-time { flex-basis: 84px; font-size: 0.8rem; }
+  .lesson-title { font-size: 0.92rem; }
+  .lesson-state { padding: 3px 6px; font-size: 0.68rem; }
+  .vac-summary { grid-template-columns: 1fr; }
+  .months-grid { grid-template-columns: 1fr; }
+  .meal-body { padding: 12px 14px 10px; }
+  .meal-info-block { padding: 11px 14px 13px; }
+  .meal-info-grid { grid-template-columns: 1fr; }
+
+  /* Нижняя вкладка — привычна для телефона и освобождает шапку. */
+  .nav {
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    z-index: 50;
+    display: flex;
+    flex: none;
+    justify-content: space-around;
+    gap: 2px;
+    padding: 5px;
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    /* Оставляем поверхность достаточно плотной: заголовки под tab bar
+       не должны просвечивать через фон. */
+    background: var(--glass-strong);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16);
+    backdrop-filter: blur(24px) saturate(1.7);
+    -webkit-backdrop-filter: blur(24px) saturate(1.7);
+  }
+
+  .nav a {
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 2px;
+    min-height: 48px;
+    padding: 5px 3px;
+    border: 0;
+    border-radius: 15px;
+    font-size: 0.64rem;
+    line-height: 1;
+  }
+
+  .nav a > span:first-child { font-size: 1.05rem; line-height: 1; }
+
+  /* На телефоне в tab bar остаются только иконки.
+     Текст сохраняется для VoiceOver и других скринридеров. */
+  .nav a > span:last-child {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
