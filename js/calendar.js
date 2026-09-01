@@ -53,10 +53,10 @@
     } else if (status.type === "after-year") {
       text = "Учебный год завершён";
     } else if (upcoming.next) {
-      const days = schoolDaysBetween(data, today, upcoming.next.start, currentSystem);
+      const days = daysBetween(today, upcoming.next.start);
       text = days > 0
         ? "До " + upcoming.next.name + " — " + days + " " +
-          pluralRu(days, "учебный день", "учебных дня", "учебных дней") +
+          pluralRu(days, "день", "дня", "дней") +
           " · начало " + formatDateRu(upcoming.next.start)
         : "Ближайшие каникулы начинаются " + formatDateRu(upcoming.next.start);
     } else {
