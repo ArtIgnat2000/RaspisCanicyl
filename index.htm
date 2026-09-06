@@ -3,54 +3,73 @@
 <head>
     <meta charset="utf-8">
     <title>🌴 Каникулы · учебный год 2026/2027</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-    <link rel="stylesheet" href="css/style.css?v=220">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#4c6fff">
+    <meta name="description" content="Календарь каникул 2026/2027 — учебные дни, выходные и каникулы в стиле iOS 26">
+    <link rel="stylesheet" href="css/style.css?v=300">
 </head>
 <body>
-    <div class="page">
-        <header class="topbar">
-            <div class="topbar-main">
-                <div class="title-block">
-                    <h1>Каникулы</h1>
-                    <p class="subtitle" id="calendar-subtitle">2026/27</p>
-                </div>
-                <nav class="nav" aria-label="Основная навигация">
-                    <a href="https://artignat2000.github.io/scool_shedule2026/" rel="noopener">
-                        <span aria-hidden="true">📚</span><span>Расписание</span>
-                    </a>
-                    <a href="index.htm" class="current" aria-current="page">
-                        <span aria-hidden="true">🌴</span><span>Каникулы</span>
-                    </a>
-                </nav>
+    <div class="bg" aria-hidden="true">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="blob b3"></div>
+        <div class="blob b4"></div>
+        <div class="blob b5"></div>
+    </div>
+
+    <main class="app">
+        <header class="hero">
+            <div class="hero-icon" aria-hidden="true">🌴</div>
+            <div>
+                <h1>Каникулы</h1>
+                <div class="subtitle" id="calendar-subtitle">2026/2027 · По четвертям</div>
+                <div class="hero-date" id="heroDate"></div>
             </div>
         </header>
 
-        <main>
-            <div class="card">
+        <!-- Переключение системы обучения — как сегменты дней в расписании -->
+        <div class="segmented glass" role="tablist" aria-label="Система каникул">
+            <div class="seg-indicator" aria-hidden="true"></div>
+            <button class="seg" type="button" role="tab" data-system="quarters" aria-selected="false">По четвертям</button>
+            <button class="seg" type="button" role="tab" data-system="trimesters" aria-selected="false">По триместрам</button>
+        </div>
+
+        <div id="errorMsg" class="error-card glass" role="alert"></div>
+
+        <!-- Карточка обратного отсчёта + периоды — как day-card в расписании -->
+        <section class="countdown-card glass" aria-label="Периоды каникул">
+            <div class="card-head">
                 <h2>Периоды каникул</h2>
-                <div class="countdown" id="vacation-countdown" aria-live="polite"></div>
-                <div class="vac-summary" id="vac-summary"></div>
+                <span class="head-badge" id="periodCount">4 периода</span>
             </div>
+            <div class="countdown" id="vacation-countdown" aria-live="polite"></div>
+            <div class="vac-summary" id="vac-summary"></div>
+        </section>
 
-            <div class="card">
-                <h2>Обозначения</h2>
-                <div class="legend">
-                    <span><i class="li-school"></i> Учебный день</span>
-                    <span><i class="li-off"></i> Выходной / праздник</span>
-                    <span><i class="li-vac"></i> Каникулы</span>
-                    <span><i class="li-today"></i> Сегодня</span>
-                </div>
+        <!-- Легенда — как rating-card -->
+        <section class="legend-card glass" aria-label="Обозначения">
+            <h3>Обозначения</h3>
+            <div class="legend">
+                <span><i class="li li-school" aria-hidden="true"></i> Учебный день</span>
+                <span><i class="li li-off" aria-hidden="true"></i> Выходной / праздник</span>
+                <span><i class="li li-vac" aria-hidden="true"></i> Каникулы</span>
+                <span><i class="li li-today" aria-hidden="true"></i> Сегодня</span>
             </div>
+        </section>
 
-            <div class="months-grid" id="months"></div>
-        </main>
+        <div class="months-grid" id="months" aria-live="polite"></div>
 
-        <footer>© 2026–2027 · Школьное расписание v2.2.0</footer>
-    </div>
+        <footer>© 2026–2027 · Школьное расписание v2.2.0 · Каникулы</footer>
+    </main>
 
-    <script src="js/data.js?v=220"></script>
-    <script src="js/calendar.js?v=220"></script>
+    <nav class="dock glass" aria-label="Разделы">
+        <a href="https://artignat2000.github.io/meal-schedule/" class="dock-btn"><span class="dock-ico" aria-hidden="true">🍽️</span><span>Еда</span></a>
+        <a href="https://artignat2000.github.io/scool_shedule2026/" class="dock-btn"><span class="dock-ico" aria-hidden="true">📚</span><span>Расписание</span></a>
+        <a href="index.htm" class="dock-btn current" aria-current="page"><span class="dock-ico" aria-hidden="true">🌴</span><span>Каникулы</span></a>
+        <a href="https://artignat2000.github.io/DopSchedule/" class="dock-btn"><span class="dock-ico" aria-hidden="true">💡</span><span>Доп</span></a>
+    </nav>
+
+    <script src="js/data.js?v=300"></script>
+    <script src="js/calendar.js?v=300"></script>
 </body>
 </html>
