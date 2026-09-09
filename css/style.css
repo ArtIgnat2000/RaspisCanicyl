@@ -181,6 +181,49 @@ body {
     @media (prefers-color-scheme: dark) { .glass { background: rgba(28, 24, 56, 0.92); } }
 }
 
+/* ── Ссылка на V labs — как на расписании и питании ───────── */
+.nav-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 20px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.15s ease;
+}
+.nav-card:active { transform: scale(0.98); }
+.nav-card .avatar {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    font-size: 23px;
+    line-height: 1;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.2));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.nav-card .texts { flex: 1; min-width: 0; }
+.nav-card .title {
+    display: block;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+}
+.nav-card .sub {
+    display: block;
+    margin-top: 1px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* ── Сегментный переключатель ──────────────────────────────── */
 .segmented {
     display: flex;
