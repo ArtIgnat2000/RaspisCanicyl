@@ -127,7 +127,8 @@
       text = "Ближайших периодов каникул нет";
     }
 
-    countdownBox.className = "countdown " + status.type;
+    const isOptionalVac = status.type === "vacation" && status.vacation && status.vacation.optional;
+    countdownBox.className = "countdown " + status.type + (isOptionalVac ? " vac-opt" : "");
     countdownBox.textContent = text;
   }
 
@@ -232,10 +233,14 @@
       cell.dataset.date = ds;
       const titles = [];
 
-      const vacation = system.vacations.find(v => ds >= v.start && ds <= v.end);
+      const inVacation = v => ds >= v.start && ds <= v.end;
+      const vacation = system.vacations.find(v => !v.optional && inVacation(v));
+      const optionalVac = system.vacations.find(v => v.optional && inVacation(v));
       if (vacation) { cell.classList.add("vac"); titles.push(vacation.name); }
+      else if (optionalVac) { cell.classList.add("vac-opt"); titles.push(optionalVac.name); }
 
-      if (dow >= 5) { cell.classList.add("off"); }
+      const isWorkday = (system.workdays || []).includes(ds);
+      if (dow >= 5 && !isWorkday) { cell.classList.add("off"); }
       if (holidaySet.has(ds)) { cell.classList.add("off"); titles.push(holidaySet.get(ds)); }
 
       if (specialSet.has(ds)) { cell.classList.add("special"); titles.push(specialSet.get(ds)); }

@@ -133,7 +133,8 @@ function getSchoolSystem(data, key) {
     label: config.name || SCHOOL_SYSTEM_LABELS[key] || key,
     vacations: config.vacations || data.vacations || [],
     publicHolidays: config.publicHolidays || data.publicHolidays || [],
-    specialDays: config.specialDays || data.specialDays || []
+    specialDays: config.specialDays || data.specialDays || [],
+    workdays: config.workdays || data.workdays || []
   };
 }
 
@@ -163,6 +164,15 @@ function getAcademicStatus(data, dateStr, systemKey) {
   }
   if (holiday) {
     return { type: "holiday", holiday, system };
+  }
+
+  /* Учебные субботы и другие перенесённые рабочие дни. */
+  if ((system.workdays || []).includes(dateStr)) {
+    return {
+      type: "school",
+      isLastSchoolDay: dateStr === system.lastSchoolDay,
+      system
+    };
   }
 
   const date = dateFromISO(dateStr);
