@@ -321,6 +321,7 @@ body {
     margin-bottom: 14px;
 }
 .countdown.vacation { background: var(--green-soft); border-color: rgba(52,199,89,0.22); color: var(--green); }
+.countdown.vacation.vac-opt { background: rgba(10,132,255,0.10); border-color: rgba(10,132,255,0.24); color: var(--tint); }
 .countdown.holiday,
 .countdown.weekend { background: var(--red-soft); border-color: rgba(255,69,58,0.18); color: var(--red); }
 .countdown.before-year,
@@ -423,6 +424,15 @@ body {
 @media (prefers-color-scheme: dark) {
     .vac-item.is-vacation { background: linear-gradient(160deg, rgba(48,209,88,0.22), rgba(48,209,88,0.08)); }
 }
+/* доп. каникулы 1 класса — голубые карточки, а не зелёные */
+.vac-item.is-vacation.optional {
+    background: linear-gradient(160deg, rgba(10,132,255,0.16), rgba(10,132,255,0.06));
+    border-color: rgba(10,132,255,0.26);
+    opacity: 1;
+}
+@media (prefers-color-scheme: dark) {
+    .vac-item.is-vacation.optional { background: linear-gradient(160deg, rgba(100,210,255,0.22), rgba(100,210,255,0.08)); }
+}
 
 /* ── Легенда — как rating-card ─────────────────────────────── */
 .legend-card {
@@ -480,6 +490,7 @@ body {
     opacity: 0.85;
 }
 .legend i.li-vac { background: var(--green-soft); border-color: rgba(52,199,89,0.22); }
+.legend i.li-vacopt { background: rgba(10,132,255,0.18); border-color: rgba(10,132,255,0.30); }
 .legend i.li-today { background: transparent; border: 2px solid var(--tint); }
 
 /* ── Сетка месяцев ─────────────────────────────────────────── */
@@ -592,6 +603,16 @@ body {
     .cal-day.vac { background: linear-gradient(145deg, rgba(48,209,88,0.24), rgba(48,209,88,0.14)); border-color: rgba(48,209,88,0.26); }
 }
 .cal-day.vac.off { color: var(--text); } /* каникулы перекрывают красный */
+.cal-day.vac-opt {
+    background: linear-gradient(145deg, rgba(10,132,255,0.20), rgba(10,132,255,0.10));
+    border-color: rgba(10,132,255,0.28);
+    color: var(--text);
+    font-weight: 700;
+}
+@media (prefers-color-scheme: dark) {
+    .cal-day.vac-opt { background: linear-gradient(145deg, rgba(100,210,255,0.24), rgba(100,210,255,0.12)); border-color: rgba(100,210,255,0.30); }
+}
+.cal-day.vac-opt.off { color: var(--text); } /* доп. каникулы 1 класса перекрывают красный */
 
 .cal-day.today::after {
     content: "";
@@ -613,6 +634,9 @@ body {
     border-radius: 50%;
     background: var(--tint);
     box-shadow: 0 0 6px var(--tint);
+}
+.cal-day.vac-opt.period-focus {
+    box-shadow: inset 0 0 0 2px var(--tint), 0 4px 14px rgba(10,132,255,0.25);
 }
 .cal-day.period-focus {
     box-shadow: inset 0 0 0 2px var(--green), 0 4px 14px rgba(52,199,89,0.22);
