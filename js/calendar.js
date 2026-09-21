@@ -235,7 +235,8 @@
       const vacation = system.vacations.find(v => ds >= v.start && ds <= v.end);
       if (vacation) { cell.classList.add("vac"); titles.push(vacation.name); }
 
-      if (dow >= 5) { cell.classList.add("off"); }
+      const isWorkday = (system.workdays || []).includes(ds);
+      if (dow >= 5 && !isWorkday) { cell.classList.add("off"); }
       if (holidaySet.has(ds)) { cell.classList.add("off"); titles.push(holidaySet.get(ds)); }
 
       if (specialSet.has(ds)) { cell.classList.add("special"); titles.push(specialSet.get(ds)); }
